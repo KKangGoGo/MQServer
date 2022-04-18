@@ -3,7 +3,10 @@ services:
   web:
     build:
       context: ./api
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
+    environment:
+      FLASK_DEBUG: "on"
+      FLASK_APP: ./app.py
     restart: always
     ports:
      - "5001:5001"
@@ -13,7 +16,7 @@ services:
   worker:
     build:
       context: ./celery-queue
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     command: celery -A tasks worker -l info -E
     environment:
       CELERY_BROKER_URL: redis://redis
@@ -24,7 +27,7 @@ services:
   monitor:
     build:
       context: ./celery-queue
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     ports:
      - "5555:5555"
     command:  ['celery', 'flower', '-A', 'tasks']
