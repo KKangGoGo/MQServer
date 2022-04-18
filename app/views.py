@@ -34,7 +34,7 @@ def request_siamese(request):
     if request.method == 'POST':
         img_byte = request.FILES['file_url'].file.read()
         data = {
-            'img_byte': base64.b64encode(img_byte)
+            'img_byte': base64.urlsafe_b64encode(img_byte).decode('utf8')
         }
         res = call_siamese.delay(data)
         return HttpResponse(str(res))

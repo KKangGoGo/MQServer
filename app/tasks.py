@@ -19,12 +19,12 @@ def add(x, y):
 
 @shared_task
 def call():
-    res = requests.get('http://host.docker.internal:5888/check', verify=False)
+    res = requests.get('zhttp://host.docker.internal:5888/check', verify=False)
     return res.status_code
 
 @shared_task(serializer='json')
 def call_siamese(data):
-    img_byte = base64.b64decode(data['img_byte'])
-    images = {'file_url': img_byte}
-    res = requests.post('http://127.0.0.1:5888/siamese', files=images).json()
+    # img_byte = base64.b64decode(data['img_byte'])
+    images = {'file_url': data['img_byte']}
+    res = requests.post('http://host.docker.internal:5888/siamese', files=images).json()
     return res.status_code
