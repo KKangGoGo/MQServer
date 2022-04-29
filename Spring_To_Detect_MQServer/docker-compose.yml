@@ -16,8 +16,9 @@ services:
       dockerfile: Dockerfile
     command: celery -A tasks worker -l info -E
     environment:
-      CELERY_BROKER_URL: redis://redis
-      CELERY_RESULT_BACKEND: redis://redis
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+      C_FORCE_ROOT: true
     depends_on:
       - redis
     volumes: ['./celery-queue:/queue']
@@ -39,3 +40,13 @@ services:
     image: redis:alpine
     ports:
       - "6379:6379"
+#    expose:
+#      - "6379"
+#    volumes:
+#      - ./conf/redis.conf:/usr/local/conf/redis.conf
+#    command: redis-server /usr/local/conf/redis.conf
+
+
+
+
+
