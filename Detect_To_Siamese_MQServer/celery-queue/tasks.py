@@ -11,6 +11,10 @@ CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', 'redis://localho
 celery = Celery('tasks', broker=CELERY_BROKER_URL, backend=CELERY_RESULT_BACKEND)
 celery.conf.update(task_serializer="pickle", accept_content=["pickle", "json"])
 
+@celery.task(name='tasks.testpost')
+def test_post():
+    res = requests.post('http://3.35.24.108/test/post', files=images).json()
+    return res
 
 @celery.task(name='tasks.siamese')
 def get_siamese_result(data):

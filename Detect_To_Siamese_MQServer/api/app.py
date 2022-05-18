@@ -30,6 +30,11 @@ def request_siamese_server():
     return str(task.id)
 
 
+@app.route('/test/post', methods=['POST'])
+def test_post():
+    celery.task = celery.send_task('tasks.testpost', args=[], kwargs={})
+
+
 @app.route('/health_check')
 def health_check() -> Response:
     return jsonify("OK")
