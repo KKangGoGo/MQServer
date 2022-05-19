@@ -14,6 +14,9 @@ celery = Celery('tasks', broker=CELERY_BROKER_URL, backend=CELERY_RESULT_BACKEND
 
 @celery.task(name='tasks.detect')
 def get_detect_result(data):
-    time.sleep(2)
-    res = requests.post('http://host.docker.internal:5999/data', data=json.dumps(data)).json()
-    return res
+    try:
+        time.sleep(2)
+        res = requests.post('http://host.docker.internal:5999/data', data=json.dumps(data)).json()
+        return res
+    except Exception as e:
+        return 'Connection Exception'

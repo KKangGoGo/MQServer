@@ -20,10 +20,7 @@ def check_task(task_id: str) -> str:
 
 @app.route('/request/siamese', methods=['POST'])
 def request_siamese_server():
-    img_byte = request.files['file_url'].read()
-    data = {
-        'img_byte': base64.b64encode(img_byte)
-    }
+    data = request.json
     task = celery.send_task('tasks.siamese', args=[data], kwargs={})
     if task == 'Connection Exception':
         return jsonify('Connection Exception', 500)
