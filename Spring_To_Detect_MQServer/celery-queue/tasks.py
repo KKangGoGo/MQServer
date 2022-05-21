@@ -12,6 +12,7 @@ celery = Celery('tasks', broker=CELERY_BROKER_URL, backend=CELERY_RESULT_BACKEND
 # celery.conf.update(task_serializer="pickle", accept_content=["pickle", "json"])
 
 
+# Redis의 요청을 하나씩 처
 @celery.task(name='tasks.detect')
 def get_detect_result(data):
     try:

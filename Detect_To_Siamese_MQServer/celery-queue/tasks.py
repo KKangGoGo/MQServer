@@ -18,6 +18,7 @@ def test_post():
     return res
 
 
+# Redis의 요청을 하나씩 처
 @celery.task(name='tasks.siamese')
 def get_siamese_result(data):
     try:

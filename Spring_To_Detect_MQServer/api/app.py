@@ -18,6 +18,7 @@ def check_task(task_id: str) -> str:
         return str(res.result)
 
 
+# 전달 받은 요청을 하나씩 celery에 전송(Queue)
 @app.route('/request/detect', methods=['POST'])
 def request_detect_server():
     data = request.json
